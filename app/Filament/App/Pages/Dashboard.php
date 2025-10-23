@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Pages;
 
-use App\Filament\Settings\Clusters\TicketType\TicketTypeCluster;
 use App\Livewire\LinkWidget;
 use Filament\Facades\Filament;
 use Filament\Support\Icons\Heroicon;

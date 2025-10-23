@@ -1,18 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Pages;
 
 use App\Filament\App\Resources\Tickets\Pages\CreateTicket;
-use App\Filament\App\Resources\Tickets\Schemas\TicketForm;
 use App\Models\Project;
-use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Filament\Actions\CreateAction;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
 use Relaticle\Flowforge\Board;
 use Relaticle\Flowforge\BoardPage;
@@ -21,7 +17,9 @@ use Relaticle\Flowforge\Column;
 class TicketBoard extends BoardPage
 {
     protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-view-columns';
+
     protected static ?string $navigationLabel = 'Task Board';
+
     protected static ?string $title = 'Ticket Board';
 
     public function board(Board $board): Board
@@ -46,6 +44,7 @@ class TicketBoard extends BoardPage
     {
         /** @var Project $project */
         $project = Filament::getTenant();
+
         return $project->tickets()->getQuery();
     }
 
@@ -53,7 +52,7 @@ class TicketBoard extends BoardPage
     {
         return [
             CreateAction::make()
-                ->url(CreateTicket::getUrl())
+                ->url(CreateTicket::getUrl()),
         ];
     }
 }

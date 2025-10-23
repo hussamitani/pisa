@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Project\Resources\Projects;
 
 use App\Filament\Project\Resources\Projects\Pages\CreateProject;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
-use App\Filament\App\Pages\CreateProject;
 use App\Filament\Pages\TicketBoard;
 use App\Models\Project;
 use Filament\Http\Middleware\Authenticate;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use Filament\Support\Icons\Heroicon;
@@ -27,10 +29,9 @@ class LinkWidget extends Widget
         string $title,
         string $description,
         string $buttonText,
-        string|Heroicon $buttonIcon = null,
+        string|Heroicon|null $buttonIcon = null,
         ?bool $newTab = false,
-    ): WidgetConfiguration
-    {
+    ): WidgetConfiguration {
         return LinkWidget::make([
             'link' => $link,
             'title' => $title,

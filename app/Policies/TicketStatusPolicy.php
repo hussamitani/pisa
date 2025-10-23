@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\TicketStatus;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class TicketStatusPolicy
 {
     use HandlesAuthorization;
-    
+
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:TicketStatus');
@@ -66,5 +66,4 @@ class TicketStatusPolicy
     {
         return $authUser->can('Reorder:TicketStatus');
     }
-
 }
