@@ -24,14 +24,16 @@ final class CreateAdminUser
     public function handle(): void
     {
         /** @var array<string, mixed> $admin */
-        $admin = config('setup.super_admin');
+        $admin = config('setup.admin');
 
         $user = User::firstOrCreate([
             'email' => $admin['email'],
         ], [
             'name' => $admin['name'],
             'password' => bcrypt($admin['password']),
-            'email_verified_at' => now(),
         ]);
+
+        $user->email_verified_at = now();
+        $user->save();
     }
 }

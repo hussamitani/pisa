@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders\Production;
 
+use App\Enum\TicketStatusCategory;
 use App\Models\TicketStatus;
 use Illuminate\Database\Seeder;
 
@@ -15,12 +16,12 @@ class TicketStatusSeeder extends Seeder
     public function run(): void
     {
         $statuses = [
-            ['name' => 'Backlog', 'category' => 'to_do'],
-            ['name' => 'To Do', 'category' => 'to_do'],
-            ['name' => 'In Progress', 'category' => 'in_progress'],
-            ['name' => 'In Review', 'category' => 'in_progress'],
-            ['name' => 'Done', 'category' => 'done'],
-            ['name' => 'Cancelled', 'category' => 'done'],
+            ['name' => 'Backlog', 'category' => TicketStatusCategory::TODO],
+            ['name' => 'To Do', 'category' => TicketStatusCategory::TODO],
+            ['name' => 'In Progress', 'category' => TicketStatusCategory::IN_PROGRESS],
+            ['name' => 'In Review', 'category' => TicketStatusCategory::IN_PROGRESS],
+            ['name' => 'Done', 'category' => TicketStatusCategory::DONE],
+            ['name' => 'Cancelled', 'category' => TicketStatusCategory::DONE],
         ];
 
         foreach ($statuses as $status) {

@@ -15,11 +15,11 @@ class TicketPrioritySeeder extends Seeder
     public function run(): void
     {
         $priorities = [
-            ['name' => 'Highest', 'color' => '#CC0000'],
-            ['name' => 'High', 'color' => '#FF5630'],
-            ['name' => 'Medium', 'color' => '#FF991F'],
-            ['name' => 'Low', 'color' => '#36B37E'],
-            ['name' => 'Lowest', 'color' => '#57D9A3'],
+            ['name' => 'Highest', 'color' => '#CC0000', 'icon' => 'heroicon-o-chevron-double-up'],
+            ['name' => 'High', 'color' => '#FF5630', 'icon' => 'heroicon-o-chevron-up'],
+            ['name' => 'Medium', 'color' => '#FF991F', 'icon' => 'heroicon-o-equals'],
+            ['name' => 'Low', 'color' => '#36B37E', 'icon' => 'heroicon-o-chevron-down'],
+            ['name' => 'Lowest', 'color' => '#57D9A3', 'icon' => 'heroicon-o-chevron-double-down'],
         ];
 
         foreach ($priorities as $priority) {

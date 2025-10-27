@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('icon');
-            $table->string('color')->default('#cecece');
             $table->softDeletes();
             $table->timestamps();
         });
