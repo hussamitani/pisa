@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $icon
  * @property string $color
- * @property int $is_default
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -51,7 +50,7 @@ class TicketType extends Model implements HasIcon, HasLabel
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'color', 'icon', 'is_default',
+        'name', 'color', 'icon',
     ];
 
     public function tickets(): HasMany

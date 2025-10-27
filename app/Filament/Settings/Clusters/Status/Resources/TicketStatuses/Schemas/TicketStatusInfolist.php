@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Schemas;
 
 use App\Models\TicketStatus;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -17,8 +16,6 @@ class TicketStatusInfolist
             ->components([
                 TextEntry::make('name'),
                 TextEntry::make('color'),
-                IconEntry::make('is_default')
-                    ->boolean(),
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (TicketStatus $record): bool => $record->trashed()),
