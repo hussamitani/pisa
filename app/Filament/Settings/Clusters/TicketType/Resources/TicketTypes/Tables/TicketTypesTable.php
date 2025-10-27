@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Guava\IconPicker\Tables\Columns\IconColumn;
 
 class TicketTypesTable
 {
@@ -23,12 +18,8 @@ class TicketTypesTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('icon')
+                IconColumn::make('icon')
                     ->searchable(),
-                TextColumn::make('color')
-                    ->searchable(),
-                IconColumn::make('is_default')
-                    ->boolean(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -46,15 +37,9 @@ class TicketTypesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
             ]);
     }
 }

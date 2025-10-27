@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Schemas;
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Guava\IconPicker\Forms\Components\IconPicker;
 
 class TicketTypeForm
 {
@@ -16,12 +16,9 @@ class TicketTypeForm
             ->components([
                 TextInput::make('name')
                     ->required(),
-                TextInput::make('icon')
-                    ->required(),
-                TextInput::make('color')
-                    ->required()
-                    ->default('#cecece'),
-                Toggle::make('is_default')
+                IconPicker::make('icon')
+                    ->sets(['heroicons'])
+                    ->iconsSearchResults()
                     ->required(),
             ]);
     }

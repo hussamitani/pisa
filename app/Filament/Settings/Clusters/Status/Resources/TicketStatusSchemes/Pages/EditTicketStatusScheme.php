@@ -6,7 +6,6 @@ namespace App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Pa
 
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\TicketStatusSchemeResource;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditTicketStatusScheme extends EditRecord
@@ -18,7 +17,6 @@ class EditTicketStatusScheme extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
             DeleteAction::make(),
         ];
     }

@@ -63,6 +63,8 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->resourceCreatePageRedirect('view')
+            ->resourceEditPageRedirect('view');
     }
 }

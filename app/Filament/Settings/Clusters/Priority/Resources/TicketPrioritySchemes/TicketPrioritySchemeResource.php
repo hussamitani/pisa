@@ -8,7 +8,7 @@ use App\Filament\Settings\Clusters\Priority\PriorityCluster;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Pages\CreateTicketPriorityScheme;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Pages\EditTicketPriorityScheme;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Pages\ListTicketPrioritySchemes;
-use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Pages\ViewTicketPriorityScheme;
+use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\RelationManagers\PrioritiesRelationManager;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Schemas\TicketPrioritySchemeForm;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Schemas\TicketPrioritySchemeInfolist;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\Tables\TicketPrioritySchemesTable;
@@ -47,7 +47,7 @@ class TicketPrioritySchemeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PrioritiesRelationManager::class,
         ];
     }
 
@@ -56,7 +56,6 @@ class TicketPrioritySchemeResource extends Resource
         return [
             'index' => ListTicketPrioritySchemes::route('/'),
             'create' => CreateTicketPriorityScheme::route('/create'),
-            'view' => ViewTicketPriorityScheme::route('/{record}'),
             'edit' => EditTicketPriorityScheme::route('/{record}/edit'),
         ];
     }

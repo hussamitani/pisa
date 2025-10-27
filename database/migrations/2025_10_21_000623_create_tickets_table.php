@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->longText('content');
+            $table->string('title');
+            $table->longText('description')->nullable();
             $table->string('code');
             $table->foreignId('owner_id')->constrained('users');
             $table->foreignId('responsible_id')->nullable()->constrained('users');

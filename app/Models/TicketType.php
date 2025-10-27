@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use BackedEnum;
+use Filament\Support\Contracts\HasIcon;
+use Filament\Support\Contracts\HasLabel;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -42,7 +46,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin \Eloquent
  */
-class TicketType extends Model
+class TicketType extends Model implements HasIcon, HasLabel
 {
     use HasFactory, SoftDeletes;
 
@@ -52,7 +56,7 @@ class TicketType extends Model
 
     public function tickets(): HasMany
     {
-        return $this->hasMany(Ticket::class, 'type_id', 'id')->withTrashed();
+        return $this->hasMany(Ticket::class, 'type_id', 'id');
     }
 
     public function schemes(): BelongsToMany
@@ -66,5 +70,15 @@ class TicketType extends Model
             ->withPivot('position')
             ->withTimestamps()
             ->orderByPivot('position');
+    }
+
+    public function getIcon(): string|BackedEnum|null
+    {
+        return $this->icon;
+    }
+
+    public function getLabel(): string|Htmlable|null
+    {
+        return $this->name;
     }
 }

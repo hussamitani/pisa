@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $name
  * @property string $color
+ * @property string $icon
  * @property int $is_default
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -45,7 +46,7 @@ class TicketPriority extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'color', 'is_default',
+        'name', 'color', 'icon', 'is_default',
     ];
 
     public function tickets(): HasMany

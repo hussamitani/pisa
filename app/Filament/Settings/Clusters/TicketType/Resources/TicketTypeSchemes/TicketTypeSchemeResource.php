@@ -7,7 +7,7 @@ namespace App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Pages\CreateTicketTypeScheme;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Pages\EditTicketTypeScheme;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Pages\ListTicketTypeSchemes;
-use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Pages\ViewTicketTypeScheme;
+use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\RelationManagers\TypesRelationManager;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Schemas\TicketTypeSchemeForm;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Schemas\TicketTypeSchemeInfolist;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypeSchemes\Tables\TicketTypeSchemesTable;
@@ -49,7 +49,7 @@ class TicketTypeSchemeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TypesRelationManager::class,
         ];
     }
 
@@ -58,7 +58,6 @@ class TicketTypeSchemeResource extends Resource
         return [
             'index' => ListTicketTypeSchemes::route('/'),
             'create' => CreateTicketTypeScheme::route('/create'),
-            'view' => ViewTicketTypeScheme::route('/{record}'),
             'edit' => EditTicketTypeScheme::route('/{record}/edit'),
         ];
     }

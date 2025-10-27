@@ -7,7 +7,6 @@ namespace App\Filament\Settings\Clusters\Status\Resources\TicketStatuses;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Pages\CreateTicketStatus;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Pages\EditTicketStatus;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Pages\ListTicketStatuses;
-use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Pages\ViewTicketStatus;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Schemas\TicketStatusForm;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Schemas\TicketStatusInfolist;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatuses\Tables\TicketStatusesTable;
@@ -58,7 +57,6 @@ class TicketStatusResource extends Resource
         return [
             'index' => ListTicketStatuses::route('/'),
             'create' => CreateTicketStatus::route('/create'),
-            'view' => ViewTicketStatus::route('/{record}'),
             'edit' => EditTicketStatus::route('/{record}/edit'),
         ];
     }

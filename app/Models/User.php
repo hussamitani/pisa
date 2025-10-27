@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Kirschbaum\Commentions\Contracts\Commenter;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -56,7 +57,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements HasTenants
+class User extends Authenticatable implements Commenter, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, HasRoles, Notifiable;

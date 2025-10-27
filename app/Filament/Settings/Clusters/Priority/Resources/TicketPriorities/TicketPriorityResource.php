@@ -8,7 +8,6 @@ use App\Filament\Settings\Clusters\Priority\PriorityCluster;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Pages\CreateTicketPriority;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Pages\EditTicketPriority;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Pages\ListTicketPriorities;
-use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Pages\ViewTicketPriority;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Schemas\TicketPriorityForm;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Schemas\TicketPriorityInfolist;
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPriorities\Tables\TicketPrioritiesTable;
@@ -58,7 +57,6 @@ class TicketPriorityResource extends Resource
         return [
             'index' => ListTicketPriorities::route('/'),
             'create' => CreateTicketPriority::route('/create'),
-            'view' => ViewTicketPriority::route('/{record}'),
             'edit' => EditTicketPriority::route('/{record}/edit'),
         ];
     }

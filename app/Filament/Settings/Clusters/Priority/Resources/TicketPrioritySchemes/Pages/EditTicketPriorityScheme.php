@@ -6,7 +6,6 @@ namespace App\Filament\Settings\Clusters\Priority\Resources\TicketPriorityScheme
 
 use App\Filament\Settings\Clusters\Priority\Resources\TicketPrioritySchemes\TicketPrioritySchemeResource;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditTicketPriorityScheme extends EditRecord
@@ -18,7 +17,6 @@ class EditTicketPriorityScheme extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
             DeleteAction::make(),
         ];
     }

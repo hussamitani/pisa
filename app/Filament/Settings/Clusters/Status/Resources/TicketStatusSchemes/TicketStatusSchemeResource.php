@@ -7,7 +7,7 @@ namespace App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Pages\CreateTicketStatusScheme;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Pages\EditTicketStatusScheme;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Pages\ListTicketStatusSchemes;
-use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Pages\ViewTicketStatusScheme;
+use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\RelationManagers\StatusesRelationManager;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Schemas\TicketStatusSchemeForm;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Schemas\TicketStatusSchemeInfolist;
 use App\Filament\Settings\Clusters\Status\Resources\TicketStatusSchemes\Tables\TicketStatusSchemesTable;
@@ -47,7 +47,7 @@ class TicketStatusSchemeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            StatusesRelationManager::class,
         ];
     }
 
@@ -56,7 +56,6 @@ class TicketStatusSchemeResource extends Resource
         return [
             'index' => ListTicketStatusSchemes::route('/'),
             'create' => CreateTicketStatusScheme::route('/create'),
-            'view' => ViewTicketStatusScheme::route('/{record}'),
             'edit' => EditTicketStatusScheme::route('/{record}/edit'),
         ];
     }

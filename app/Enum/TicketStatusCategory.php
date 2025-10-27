@@ -26,8 +26,8 @@ enum TicketStatusCategory: string implements HasLabel
     {
         return match ($this) {
             self::TODO => __('To Do'),
-            self::IN_PROGRESS => __('To Do'),
-            self::DONE => __('To Do'),
+            self::IN_PROGRESS => __('In Progress'),
+            self::DONE => __('Done'),
         };
     }
 }

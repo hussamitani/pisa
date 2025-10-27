@@ -7,7 +7,6 @@ namespace App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Pages\CreateTicketType;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Pages\EditTicketType;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Pages\ListTicketTypes;
-use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Pages\ViewTicketType;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Schemas\TicketTypeForm;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Schemas\TicketTypeInfolist;
 use App\Filament\Settings\Clusters\TicketType\Resources\TicketTypes\Tables\TicketTypesTable;
@@ -58,7 +57,6 @@ class TicketTypeResource extends Resource
         return [
             'index' => ListTicketTypes::route('/'),
             'create' => CreateTicketType::route('/create'),
-            'view' => ViewTicketType::route('/{record}'),
             'edit' => EditTicketType::route('/{record}/edit'),
         ];
     }

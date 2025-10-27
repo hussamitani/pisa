@@ -12,13 +12,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kirschbaum\Commentions\Contracts\Commentable;
+use Kirschbaum\Commentions\HasComments;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @property int $id
- * @property string $name
- * @property string $content
+ * @property string $title
+ * @property string $description
  * @property string $code
  * @property int $owner_id
  * @property int|null $responsible_id
@@ -67,7 +69,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket wherePriorityId($value)
@@ -81,12 +83,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  *
  * @mixin \Eloquent
  */
-class Ticket extends Model implements HasMedia
+class Ticket extends Model implements Commentable, HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes;
+    use HasComments, HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
-        'name', 'content', 'owner_id', 'responsible_id',
+        'title', 'description', 'owner_id', 'responsible_id',
         'status_id', 'project_id', 'code', 'order', 'type_id',
         'priority_id', 'estimation', 'epic_id', 'sprint_id',
     ];

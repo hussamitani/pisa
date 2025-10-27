@@ -31,6 +31,7 @@ class SettingsPanelProvider extends PanelProvider
             ->path('settings')
             ->topNavigation()
             ->maxContentWidth(Width::Full)
+            ->viteTheme('resources/css/filament/settings/theme.css')
             ->colors([
                 'primary' => Color::Amber,
             ])

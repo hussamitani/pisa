@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/css/filament/app/theme.css',
+                'resources/css/filament/settings/theme.css',
                 'vendor/resma/filament-awin-theme/resources/css/theme.css'
             ],
             refresh: true,

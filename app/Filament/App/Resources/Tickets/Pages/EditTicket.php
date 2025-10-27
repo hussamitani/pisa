@@ -10,6 +10,7 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
+use Kirschbaum\Commentions\Filament\Actions\CommentsAction;
 
 class EditTicket extends EditRecord
 {
@@ -18,6 +19,7 @@ class EditTicket extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            CommentsAction::make(),
             ViewAction::make(),
             DeleteAction::make(),
             ForceDeleteAction::make(),
