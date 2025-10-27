@@ -16,8 +16,7 @@
         "knuckleswtf/scribe": "^5.5",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "relaticle/flowforge": "^2.0",
-        "resma/filament-awin-theme": "^1.1"
+        "relaticle/flowforge": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",

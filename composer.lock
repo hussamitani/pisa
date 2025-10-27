@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbab22f69f0b00cc08ac284fb7a7f73a",
+    "content-hash": "ee92b3254695c7160cf8087c7f7a1e1f",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -6120,69 +6120,6 @@
             "time": "2025-10-21T08:06:58+00:00"
         },
         {
-            "name": "resma/filament-awin-theme",
-            "version": "v1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/resmatech/filament-awin-theme.git",
-                "reference": "95b58e5ae17032b7619754b26b09193040e17311"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/resmatech/filament-awin-theme/zipball/95b58e5ae17032b7619754b26b09193040e17311",
-                "reference": "95b58e5ae17032b7619754b26b09193040e17311",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^4.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.15.0"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "FilamentAwinTheme": "Resma\\FilamentAwinTheme\\Facades\\FilamentAwinTheme"
-                    },
-                    "providers": []
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Resma\\FilamentAwinTheme\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rebwar Mustafa",
-                    "email": "hello@resma.tech",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A modern, responsive, and customizable theme for FilamentPHP, designed to elevate your admin panel with a sleek interface and seamless user experience.",
-            "homepage": "https://github.com/resmatech/filament-awin-theme",
-            "keywords": [
-                "Resma",
-                "filament",
-                "filament-awin-theme",
-                "filamentphp",
-                "laravel",
-                "theme"
-            ],
-            "support": {
-                "issues": "https://github.com/resmatech/filament-awin-theme/issues",
-                "source": "https://github.com/resmatech/filament-awin-theme"
-            },
-            "time": "2025-09-30T05:34:21+00:00"
-        },
-        {
             "name": "ryangjchandler/blade-capture-directive",
             "version": "v1.1.0",
             "source": {
@@ -6803,16 +6740,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "6.21.0",
+            "version": "6.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "6a118e8855dfffcd90403aab77bbf35a03db51b3"
+                "reference": "8c87966ddc21893bfda54b792047473703992625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6a118e8855dfffcd90403aab77bbf35a03db51b3",
-                "reference": "6a118e8855dfffcd90403aab77bbf35a03db51b3",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/8c87966ddc21893bfda54b792047473703992625",
+                "reference": "8c87966ddc21893bfda54b792047473703992625",
                 "shasum": ""
             },
             "require": {
@@ -6874,7 +6811,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/6.21.0"
+                "source": "https://github.com/spatie/laravel-permission/tree/6.22.0"
             },
             "funding": [
                 {
@@ -6882,7 +6819,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-23T16:08:05+00:00"
+            "time": "2025-10-27T21:58:45+00:00"
         },
         {
             "name": "spatie/shiki-php",
