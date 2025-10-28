@@ -13,7 +13,7 @@ class SprintInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name')->columnSpanFull(),
+                TextEntry::make('name')->label(__('Sprint name'))->columnSpanFull(),
                 TextEntry::make('begins_at')->date('d.m.Y'),
                 TextEntry::make('ends_at')->date('d.m.Y'),
                 TextEntry::make('description')->columnSpanFull(),

@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\Sprints\Pages;
 
+use App\Filament\App\Resources\Sprints\Schemas\SprintInfolist;
 use App\Filament\App\Resources\Sprints\SprintResource;
 use App\Filament\App\Resources\Tickets\Pages\CreateTicket;
 use App\Models\Project;
+use App\Models\Sprint;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Filament\Actions\CreateAction;
+use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\ViewRecord;
@@ -17,12 +20,16 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\TextSize;
 use Filament\Support\Enums\Width;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Relaticle\Flowforge\Board;
 use Relaticle\Flowforge\Column;
 use Relaticle\Flowforge\Concerns\InteractsWithBoard;
 use Relaticle\Flowforge\Contracts\HasBoard;
 
+/**
+ * @property-read Sprint $record
+ */
 class ViewSprint extends ViewRecord implements HasBoard
 {
     use InteractsWithBoard;
@@ -32,6 +39,11 @@ class ViewSprint extends ViewRecord implements HasBoard
     protected Width|string|null $maxContentWidth = Width::Full;
 
     protected string $view = 'flowforge::filament.pages.board-page';
+
+    public function getTitle(): string|Htmlable
+    {
+        return $this->record->name;
+    }
 
     public function board(Board $board): Board
     {
@@ -94,7 +106,13 @@ class ViewSprint extends ViewRecord implements HasBoard
     protected function getHeaderActions(): array
     {
         return [
+            ViewAction::make('details')
+                ->label(__('Details'))
+                ->record($this->record)
+                ->modalHeading(__('Details'))
+                ->schema(fn ($schema) => SprintInfolist::configure($schema)->columns(2)),
             CreateAction::make()
+                ->label(__('Create Ticket'))
                 ->url(CreateTicket::getUrl()),
         ];
     }
