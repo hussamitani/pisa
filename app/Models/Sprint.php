@@ -65,7 +65,7 @@ class Sprint extends Model
 
     public function tickets(): HasMany
     {
-        return $this->hasMany(Ticket::class, 'sprint_id', 'id');
+        return $this->hasMany(Ticket::class, 'sprint_id', 'id')->orderBy('sprint_position');
     }
 
     public function remaining(): Attribute

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Project\Resources\Projects\Pages;
 
+use App\Filament\App\Pages\ProjectBoard;
 use App\Filament\App\Resources\Sprints\Pages\ListSprints;
 use App\Filament\App\Resources\Tickets\Pages\ListTickets;
-use App\Filament\Pages\TicketBoard;
 use App\Filament\Project\Resources\Projects\ProjectResource;
 use App\Livewire\LinkWidget;
 use App\Models\Project;
@@ -43,7 +43,7 @@ class ViewProject extends ViewRecord
                 Heroicon::OutlinedTicket,
             ),
             LinkWidget::to(
-                TicketBoard::getUrl(['tenant' => $this->record], panel: 'app'),
+                ProjectBoard::getUrl(['tenant' => $this->record], panel: 'app'),
                 __('Board'),
                 trans('resource.board.link.description'),
                 __('Board'),

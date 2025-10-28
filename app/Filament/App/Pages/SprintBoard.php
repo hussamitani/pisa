@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Pages;
+namespace App\Filament\App\Pages;
 
 use App\Filament\App\Resources\Tickets\Pages\CreateTicket;
 use App\Models\Project;
+use App\Models\Sprint;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Filament\Actions\CreateAction;
@@ -15,20 +16,34 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\TextSize;
 use Filament\Support\Enums\Width;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Relaticle\Flowforge\Board;
 use Relaticle\Flowforge\BoardPage;
 use Relaticle\Flowforge\Column;
 
-class TicketBoard extends BoardPage
+class SprintBoard extends BoardPage
 {
-    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-view-columns';
+    protected static string|null|\BackedEnum $navigationIcon = Heroicon::OutlinedMap;
 
-    protected static ?string $navigationLabel = 'Task Board';
+    protected static ?string $navigationLabel = 'Sprint Board';
 
-    protected static ?string $title = 'Ticket Board';
+    protected static ?string $title = 'Sprint Board';
 
     protected Width|string|null $maxContentWidth = Width::Full;
+
+    public static function isDiscovered(): bool
+    {
+        return Sprint::query()->exists();
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        /** @var Project $project */
+        $project = Filament::getTenant();
+
+        return $project->sprints()->exists();
+    }
 
     public function board(Board $board): Board
     {
@@ -47,8 +62,6 @@ class TicketBoard extends BoardPage
             ->positionIdentifier('position')
             ->columns($statusColumns->toArray())
             ->cardSchema(fn (Schema $schema) => $schema->components([
-                // Status badges
-
                 Grid::make(3)->schema([
                     TextEntry::make('type.name')
                         ->label(__('Type'))
@@ -90,7 +103,10 @@ class TicketBoard extends BoardPage
         /** @var Project $project */
         $project = Filament::getTenant();
 
-        return $project->tickets()->getQuery();
+        /** @var Sprint $sprint */
+        $sprint = $project->sprints->last();
+
+        return $sprint->tickets()->getQuery();
     }
 
     protected function getHeaderActions(): array

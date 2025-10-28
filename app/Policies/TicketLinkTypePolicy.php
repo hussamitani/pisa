@@ -29,27 +29,27 @@ class TicketLinkTypePolicy
 
     public function update(AuthUser $authUser, TicketLinkType $ticketLinkType): bool
     {
-        return $authUser->can('Update:TicketLinkType') && ! $ticketLinkType->is_system;
+        return $authUser->can('Update:TicketLinkType');
     }
 
     public function delete(AuthUser $authUser, TicketLinkType $ticketLinkType): bool
     {
-        return $authUser->can('Delete:TicketLinkType') && ! $ticketLinkType->is_system;
+        return $authUser->can('Delete:TicketLinkType');
     }
 
     public function restore(AuthUser $authUser, TicketLinkType $ticketLinkType): bool
     {
-        return $authUser->can('Restore:TicketLinkType') && ! $ticketLinkType->is_system;
+        return $authUser->can('Restore:TicketLinkType');
     }
 
     public function forceDelete(AuthUser $authUser, TicketLinkType $ticketLinkType): bool
     {
-        return $authUser->can('ForceDelete:TicketLinkType') && ! $ticketLinkType->is_system;
+        return $authUser->can('ForceDelete:TicketLinkType');
     }
 
     public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return false;
+        return $authUser->can('ForceDeleteAny:TicketLinkType');
     }
 
     public function restoreAny(AuthUser $authUser): bool

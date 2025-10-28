@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\Sprints;
 
-use App\Filament\App\Resources\Sprints\Pages\CreateSprint;
-use App\Filament\App\Resources\Sprints\Pages\EditSprint;
 use App\Filament\App\Resources\Sprints\Pages\ListSprints;
-use App\Filament\App\Resources\Sprints\Pages\ViewSprint;
 use App\Filament\App\Resources\Sprints\Schemas\SprintForm;
 use App\Filament\App\Resources\Sprints\Schemas\SprintInfolist;
 use App\Filament\App\Resources\Sprints\Tables\SprintsTable;
@@ -17,6 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class SprintResource extends Resource
 {
@@ -48,13 +47,15 @@ class SprintResource extends Resource
         ];
     }
 
+    public static function getRecordTitle(?Model $record): string|Htmlable|null
+    {
+        return $record->name;
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => ListSprints::route('/'),
-            'create' => CreateSprint::route('/create'),
-            'view' => ViewSprint::route('/{record}'),
-            'edit' => EditSprint::route('/{record}/edit'),
         ];
     }
 }

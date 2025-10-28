@@ -18,7 +18,7 @@ class TicketForm
     {
         return $schema
             ->components([
-                Section::make('ticket')
+                Section::make(__('Ticket'))
                     ->columnSpan(3)
                     ->columns(3)
                     ->schema([
@@ -34,7 +34,7 @@ class TicketForm
                         RichEditor::make('description')
                             ->columnSpanFull(),
                     ]),
-                Section::make('settings')
+                Section::make(__('Settings'))
                     ->columnSpan(1)
                     ->schema([
                         Select::make('responsible_id')
@@ -55,6 +55,12 @@ class TicketForm
                             ->preload()
                             ->options(fn () => Filament::getTenant()->ticketPriorityScheme?->priorities->pluck('name', 'id') ?? [])
                             ->required(),
+                        Select::make('sprint_id')
+                            ->visible(fn () => Filament::getTenant()->sprints()->exists())
+                            ->label(__('Sprint'))
+                            ->searchable()
+                            ->preload()
+                            ->options(fn () => Filament::getTenant()->sprints->pluck('name', 'id') ?? []),
                     ]),
                 Hidden::make('owner_id')
                     ->default(auth()->user()->id),

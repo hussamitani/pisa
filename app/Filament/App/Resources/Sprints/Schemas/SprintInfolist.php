@@ -13,12 +13,10 @@ class SprintInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                TextEntry::make('name')->columnSpanFull(),
+                TextEntry::make('begins_at')->date('d.m.Y'),
+                TextEntry::make('ends_at')->date('d.m.Y'),
+                TextEntry::make('description')->columnSpanFull(),
             ]);
     }
 }

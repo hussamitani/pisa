@@ -15,6 +15,12 @@ class SprintsTable
     {
         return $table
             ->columns([
+                TextColumn::make('name'),
+                TextColumn::make('description'),
+                TextColumn::make('begins_at')
+                    ->date('d.m.Y'),
+                TextColumn::make('ends_at')
+                    ->date('d.m.Y'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

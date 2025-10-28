@@ -100,6 +100,7 @@ class Ticket extends Model implements Commentable, HasMedia
         'title', 'description', 'owner_id', 'responsible_id',
         'status_id', 'project_id', 'code', 'order', 'type_id',
         'priority_id', 'estimation', 'epic_id', 'sprint_id',
+        'position', 'sprint_position',
     ];
 
     public static function boot()

@@ -19,7 +19,8 @@ class EditTicket extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            CommentsAction::make(),
+            CommentsAction::make()
+                ->disableSidebar(),
             ViewAction::make(),
             DeleteAction::make(),
             ForceDeleteAction::make(),

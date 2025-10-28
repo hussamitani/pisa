@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\TicketBoard;
 use App\Http\Middleware\RedirectToProjectPanel;
 use App\Models\Project;
 use Filament\Http\Middleware\Authenticate;
@@ -41,7 +40,6 @@ class AppPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\Filament\App\Widgets')
             ->discoverClusters(in: app_path('Filament/App/Clusters'), for: 'App\Filament\App\Clusters')
             ->pages([
-                TicketBoard::class,
             ])
             ->widgets([
                 AccountWidget::class,
@@ -63,6 +61,9 @@ class AppPanelProvider extends PanelProvider
                 Authenticate::class,
                 RedirectToProjectPanel::class,
             ])
+            ->globalSearch()
+            ->tenantMiddleware([], isPersistent: false)
+            ->databaseNotifications()
             ->resourceCreatePageRedirect('view')
             ->resourceEditPageRedirect('view');
     }

@@ -17,8 +17,11 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class TicketResource extends Resource
 {
@@ -27,6 +30,25 @@ class TicketResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
 
     protected static ?int $navigationSort = 1;
+
+    public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
+    {
+        $icon = view('filament::components.icon', [
+            'icon' => $record->type->icon,
+            'class' => 'h-4 w-4 shrink-0',
+        ])->render();
+
+        $text = e($record->code).' '.e($record->title);
+
+        return new HtmlString(
+            '<div class="flex items-center gap-1.5">'.trim($icon).'<span>'.$text.'</span></div>'
+        );
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'code', 'owner.name', 'type.name'];
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -66,5 +88,10 @@ class TicketResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return static::getModel()::query();
     }
 }
