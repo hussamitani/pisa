@@ -16,51 +16,51 @@ class TicketLinkTypeSeeder extends Seeder
     {
         $linkTypes = [
             [
-                'name' => 'blocks',
+                'name' => 'Blocks',
                 'inward_description' => 'is blocked by',
                 'outward_description' => 'blocks',
                 'is_system' => true,
                 'is_hierarchical' => false,
             ],
             [
-                'name' => 'clones',
+                'name' => 'Clones',
                 'inward_description' => 'is cloned by',
                 'outward_description' => 'clones',
                 'is_system' => true,
                 'is_hierarchical' => false,
             ],
             [
-                'name' => 'duplicates',
+                'name' => 'Duplicates',
                 'inward_description' => 'is duplicated by',
                 'outward_description' => 'duplicates',
                 'is_system' => true,
                 'is_hierarchical' => false,
             ],
             [
-                'name' => 'relates',
+                'name' => 'Relates To',
                 'inward_description' => 'relates to',
                 'outward_description' => 'relates to',
                 'is_system' => true,
                 'is_hierarchical' => false,
             ],
             [
-                'name' => 'parent-child',
+                'name' => 'Parent-Child',
                 'inward_description' => 'is child of',
                 'outward_description' => 'is parent of',
                 'is_system' => true,
                 'is_hierarchical' => true,
             ],
             [
-                'name' => 'epic',
+                'name' => 'Epic',
                 'inward_description' => 'belongs to epic',
-                'outward_description' => 'has',
+                'outward_description' => 'contains',
                 'is_system' => true,
                 'is_hierarchical' => true,
             ],
         ];
 
         foreach ($linkTypes as $linkType) {
-            TicketLinkType::firstOrCreate(
+            TicketLinkType::updateOrCreate(
                 ['name' => $linkType['name']],
                 $linkType
             );

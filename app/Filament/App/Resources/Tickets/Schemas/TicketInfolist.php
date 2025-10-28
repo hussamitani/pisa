@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\Tickets\Schemas;
 
+use App\Filament\App\Resources\Tickets\Pages\ViewTicket;
 use App\Models\Ticket;
+use App\Models\TicketLink;
 use App\Models\User;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +41,83 @@ class TicketInfolist
                                     ])
                                     ->collapsible()
                                     ->collapsed(false),
+
+                                Section::make('Linked Tickets')
+                                    ->icon('heroicon-o-link')
+                                    ->description('Related tickets and dependencies')
+                                    ->schema([
+                                        Group::make()
+                                            ->schema(
+                                                collect()
+                                                    ->push(
+                                                        // Outward links
+                                                        RepeatableEntry::make('outwardLinks')
+                                                            ->label('')
+                                                            ->schema([
+                                                                TextEntry::make('linkType.outward_description')
+                                                                    ->label('Relationship')
+                                                                    ->badge()
+                                                                    ->color('info')
+                                                                    ->icon('heroicon-o-arrow-right'),
+
+                                                                TextEntry::make('targetTicket.code')
+                                                                    ->label('Ticket')
+                                                                    ->badge()
+                                                                    ->color('gray')
+                                                                    ->url(fn (TicketLink $record) => ViewTicket::getUrl(['record' => $record->sourceTicket]))
+                                                                    ->weight('semibold'),
+
+                                                                TextEntry::make('targetTicket.title')
+                                                                    ->label('Title')
+                                                                    ->limit(50)
+                                                                    ->tooltip(fn (TicketLink $record) => $record->targetTicket->title),
+
+                                                                TextEntry::make('targetTicket.status.name')
+                                                                    ->label('Status')
+                                                                    ->badge()
+                                                                    ->color(fn (TicketLink $record) => $record->targetTicket->status->category->getColor()),
+                                                            ])
+                                                            ->columns(4)
+                                                            ->visible(fn (Ticket $record) => $record->outwardLinks->isNotEmpty()),
+
+                                                        // Inward links
+                                                        RepeatableEntry::make('inwardLinks')
+                                                            ->label('')
+                                                            ->schema([
+                                                                TextEntry::make('linkType.inward_description')
+                                                                    ->label('Relationship')
+                                                                    ->badge()
+                                                                    ->color('warning')
+                                                                    ->icon('heroicon-o-arrow-left'),
+
+                                                                TextEntry::make('sourceTicket.code')
+                                                                    ->label('Ticket')
+                                                                    ->badge()
+                                                                    ->color('gray')
+                                                                    ->url(fn (TicketLink $record) => ViewTicket::getUrl(['record' => $record->sourceTicket]))
+                                                                    ->weight('semibold'),
+
+                                                                TextEntry::make('sourceTicket.title')
+                                                                    ->label('Title')
+                                                                    ->limit(50)
+                                                                    ->tooltip(fn (TicketLink $record) => $record->sourceTicket->title),
+
+                                                                TextEntry::make('sourceTicket.status.name')
+                                                                    ->label('Status')
+                                                                    ->badge()
+                                                                    ->color(fn (TicketLink $record) => $record->sourceTicket->status->category->getColor()),
+                                                            ])
+                                                            ->columns(4)
+                                                            ->visible(fn (Ticket $record) => $record->inwardLinks->isNotEmpty()),
+                                                    )
+                                                    ->toArray()
+                                            ),
+                                    ])
+                                    ->collapsible()
+                                    ->collapsed(false)
+                                    ->visible(fn (Ticket $record) => $record->outwardLinks->isNotEmpty() ||
+                                        $record->inwardLinks->isNotEmpty()
+                                    ),
 
                                 Section::make('Comments')
                                     ->schema([

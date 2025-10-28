@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use Database\Seeders\Production\TicketLinkTypeSeeder;
 use Database\Seeders\Production\TicketPrioritySchemeSeeder;
 use Database\Seeders\Production\TicketPrioritySeeder;
 use Database\Seeders\Production\TicketStatusSchemeSeeder;
@@ -25,6 +26,8 @@ class ProductionSeeder extends Seeder
 
             TicketStatusSeeder::class,
             TicketStatusSchemeSeeder::class,
+
+            TicketLinkTypeSeeder::class,
         ]);
     }
 }
