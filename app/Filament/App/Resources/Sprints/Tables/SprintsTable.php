@@ -34,7 +34,9 @@ class SprintsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                ViewAction::make()
+                    ->label('Board')
+                    ->icon('heroicon-o-square-3-stack-3d'),
                 EditAction::make(),
             ])
             ->toolbarActions([

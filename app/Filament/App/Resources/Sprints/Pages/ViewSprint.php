@@ -2,48 +2,36 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\App\Pages;
+namespace App\Filament\App\Resources\Sprints\Pages;
 
+use App\Filament\App\Resources\Sprints\SprintResource;
 use App\Filament\App\Resources\Tickets\Pages\CreateTicket;
 use App\Models\Project;
-use App\Models\Sprint;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Filament\Actions\CreateAction;
 use Filament\Facades\Filament;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\TextSize;
 use Filament\Support\Enums\Width;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Relaticle\Flowforge\Board;
-use Relaticle\Flowforge\BoardPage;
 use Relaticle\Flowforge\Column;
+use Relaticle\Flowforge\Concerns\InteractsWithBoard;
+use Relaticle\Flowforge\Contracts\HasBoard;
 
-class SprintBoard extends BoardPage
+class ViewSprint extends ViewRecord implements HasBoard
 {
-    protected static string|null|\BackedEnum $navigationIcon = Heroicon::OutlinedMap;
+    use InteractsWithBoard;
 
-    protected static ?string $navigationLabel = 'Sprint Board';
-
-    protected static ?string $title = 'Sprint Board';
+    protected static string $resource = SprintResource::class;
 
     protected Width|string|null $maxContentWidth = Width::Full;
 
-    public static function isDiscovered(): bool
-    {
-        return Sprint::query()->exists();
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        /** @var Project $project */
-        $project = Filament::getTenant();
-
-        return $project->sprints()->exists();
-    }
+    protected string $view = 'flowforge::filament.pages.board-page';
 
     public function board(Board $board): Board
     {
@@ -100,13 +88,7 @@ class SprintBoard extends BoardPage
 
     public function getEloquentQuery(): Builder
     {
-        /** @var Project $project */
-        $project = Filament::getTenant();
-
-        /** @var Sprint $sprint */
-        $sprint = $project->sprints->last();
-
-        return $sprint->tickets()->getQuery();
+        return $this->record->tickets()->getQuery();
     }
 
     protected function getHeaderActions(): array

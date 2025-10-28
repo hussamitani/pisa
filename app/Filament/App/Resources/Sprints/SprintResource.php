@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\App\Resources\Sprints;
 
 use App\Filament\App\Resources\Sprints\Pages\ListSprints;
+use App\Filament\App\Resources\Sprints\Pages\ViewSprint;
 use App\Filament\App\Resources\Sprints\Schemas\SprintForm;
 use App\Filament\App\Resources\Sprints\Schemas\SprintInfolist;
 use App\Filament\App\Resources\Sprints\Tables\SprintsTable;
@@ -56,6 +57,7 @@ class SprintResource extends Resource
     {
         return [
             'index' => ListSprints::route('/'),
+            'view' => ViewSprint::route('/{record}/board'),
         ];
     }
 }
