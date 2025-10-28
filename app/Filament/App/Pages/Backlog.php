@@ -29,6 +29,8 @@ class Backlog extends Page implements HasTable
 {
     use InteractsWithTable;
 
+    protected $listeners = ['sprint-updated' => '$refresh', 'refresh-all-tables' => '$refresh'];
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQueueList;
 
     protected static ?int $navigationSort = 5;
@@ -49,10 +51,8 @@ class Backlog extends Page implements HasTable
             ->columns([
                 TextColumn::make('code')
                     ->badge()
-                    ->searchable()
                     ->sortable(),
                 TextColumn::make('title')
-                    ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
                     ->icon(fn (TicketType $state) => $state->getIcon())
@@ -77,13 +77,12 @@ class Backlog extends Page implements HasTable
 
                         return $project->sprints()
                             ->pluck('name', 'id')
-                            ->prepend('Backlog', null)
                             ->toArray();
                     })
                     ->placeholder('Backlog')
                     ->afterStateUpdated(function (Ticket $record, $state) {
                         $record->update(['sprint_id' => $state]);
-                        $this->dispatch('$refresh');
+                        $this->dispatch('refresh-all-tables');
                     }),
                 TextColumn::make('responsible.name')
                     ->placeholder('Unassigned')

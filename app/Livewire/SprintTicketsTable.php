@@ -10,6 +10,8 @@ use App\Models\Ticket;
 use App\Models\TicketPriority;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Facades\Filament;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -22,11 +24,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
-class SprintTicketsTable extends Component implements HasForms, HasTable
+class SprintTicketsTable extends Component implements HasActions, HasForms, HasTable
 {
-    use InteractsWithForms, InteractsWithTable;
+    use InteractsWithActions, InteractsWithForms, InteractsWithTable;
 
     public Sprint $sprint;
+
+    protected $listeners = ['refresh-all-tables' => '$refresh'];
 
     public function mount(Sprint $sprint): void
     {
@@ -73,7 +77,7 @@ class SprintTicketsTable extends Component implements HasForms, HasTable
                     })
                     ->afterStateUpdated(function (Ticket $record, $state) {
                         $record->update(['sprint_id' => $state]);
-                        $this->dispatch('sprint-updated');
+                        $this->dispatch('refresh-all-tables');
                     }),
                 TextColumn::make('responsible.name')
                     ->placeholder('Unassigned')

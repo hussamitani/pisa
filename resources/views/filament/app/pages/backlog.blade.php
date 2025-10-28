@@ -39,12 +39,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('sprint-updated', () => {
-                @this.call('$refresh');
-            });
-        });
-    </script>
 </x-filament-panels::page>
