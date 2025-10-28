@@ -157,12 +157,7 @@ class TicketInfolist
 
                                 TextEntry::make('type.name')
                                     ->label('Type')
-                                    ->icon(fn (Ticket $record) => match ($record->type?->name) {
-                                        'Bug' => 'heroicon-o-bug-ant',
-                                        'Feature' => 'heroicon-o-star',
-                                        'Task' => 'heroicon-o-check-circle',
-                                        default => 'heroicon-o-document-text',
-                                    }),
+                                    ->icon(fn (Ticket $record) => $record->type->icon),
 
                                 TextEntry::make('owner.name')
                                     ->label('Reporter')

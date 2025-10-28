@@ -40,13 +40,7 @@ class ViewTicket extends ViewRecord
             return Action::make("status_{$status->id}")
                 ->label($status->name)
                 ->icon(Heroicon::OutlinedArrowRightCircle)
-                ->color(match ($status->name) {
-                    'Open' => 'info',
-                    'In Progress' => 'warning',
-                    'Done' => 'success',
-                    'Closed' => 'gray',
-                    default => 'gray',
-                })
+                ->color($status->category->getColor())
                 ->requiresConfirmation()
                 ->action(function () use ($status) {
                     $this->record->update([
@@ -69,7 +63,7 @@ class ViewTicket extends ViewRecord
                 ->label('Link Ticket')
                 ->icon('heroicon-o-link')
                 ->color('gray')
-                ->form([
+                ->schema([
                     Select::make('link_direction')
                         ->label('Relationship')
                         ->options(function () {
