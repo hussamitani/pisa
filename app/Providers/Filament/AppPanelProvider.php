@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\TicketBoard;
+use App\Http\Middleware\RedirectToProjectPanel;
 use App\Models\Project;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -31,7 +31,6 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->id('app')
             ->path('project')
-            ->login()
             ->tenant(Project::class, 'ticket_prefix')
             ->maxContentWidth(Width::Full)
             ->colors([
@@ -42,7 +41,6 @@ class AppPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\Filament\App\Widgets')
             ->discoverClusters(in: app_path('Filament/App/Clusters'), for: 'App\Filament\App\Clusters')
             ->pages([
-                Dashboard::class,
                 TicketBoard::class,
             ])
             ->widgets([
@@ -63,6 +61,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                RedirectToProjectPanel::class,
             ])
             ->resourceCreatePageRedirect('view')
             ->resourceEditPageRedirect('view');

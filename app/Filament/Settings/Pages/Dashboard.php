@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\App\Pages;
+namespace App\Filament\Settings\Pages;
 
-use App\Filament\Project\Resources\Projects\Pages\EditProject;
 use App\Livewire\LinkWidget;
 use Filament\Facades\Filament;
 use Filament\Support\Icons\Heroicon;
@@ -22,15 +21,15 @@ class Dashboard extends \Filament\Pages\Dashboard
     {
         return [
             LinkWidget::to(
-                EditProject::getUrl(['record' => Filament::getTenant()], panel: 'project'),
-                __('Project settings'),
-                __('Configure the current project'),
-                Filament::getTenant()->name,
+                route('filament.settings.pages.dashboard'),
+                'Settings Panel',
+                __('Configure your Pisa application'),
+                __('Settings'),
                 Heroicon::OutlinedCog,
             ),
             LinkWidget::to(
-                \App\Filament\Settings\Pages\Dashboard::getUrl(panel: 'settings'),
-                'Configure global settings',
+                Dashboard::getUrl(),
+                'Pisa App',
                 __('Configure your Pisa application'),
                 __('Settings'),
                 Heroicon::OutlinedCog,

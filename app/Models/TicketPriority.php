@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TicketPriority whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TicketPriority withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TicketPriority withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TicketPriority whereIcon($value)
  *
  * @mixin \Eloquent
  */

@@ -73,50 +73,95 @@ This project leverages several excellent Filament plugins that extend the admin 
    cd project-management
    ```
 
-2. **Install dependencies and setup**
+2. **Setup environment**
    ```bash
-   composer run setup
+   # Option 1: Quick setup with Makefile
+   make init
+   
+   # Option 2: Manual setup with Sail commands
+   cp .env.example .env  # if .env doesn't exist
+   composer install --ignore-platform-reqs
+   ./vendor/bin/sail up -d --build
+   ./vendor/bin/sail composer install
+   ./vendor/bin/sail npm install && ./vendor/bin/sail npm run build
+   ./vendor/bin/sail artisan key:generate
+   ./vendor/bin/sail artisan storage:link
+   ./vendor/bin/sail artisan migrate:fresh
+   ./vendor/bin/sail artisan app:setup
+   ./vendor/bin/sail artisan shield:super-admin --panel=admin
+   ./vendor/bin/sail artisan db:seed --class=ProductionSeeder
    ```
-   This command will:
-   - Install PHP dependencies
-   - Copy `.env.example` to `.env`
-   - Generate application key
-   - Run database migrations
-   - Install and build frontend assets
 
-3. **Start the development server**
+3. **Update domain (optional)**
+   Add to `/etc/hosts` for custom domain:
    ```bash
-   composer run dev
+   echo "127.0.0.1 pisa.localhost" | sudo tee -a /etc/hosts
    ```
-   This starts the Laravel server, queue worker, logs, and Vite dev server concurrently.
+   Then update `APP_URL=http://pisa.localhost` in `.env`
 
 4. **Access the application**
-   - Application: http://localhost:8000
-   - Admin Panel: http://localhost:8000/admin
+   - Application: http://pisa.localhost (or http://localhost)
+   - Admin Panel: http://pisa.localhost/admin
 
-### Manual Setup (Alternative)
+### Development Commands
 
-If you prefer manual setup:
+Use Laravel Sail for all development tasks:
 
 ```bash
-# Install PHP dependencies
-composer install
+# Start services
+./vendor/bin/sail up -d
+# or
+make up
 
-# Setup environment
-cp .env.example .env
-php artisan key:generate
+# Stop services  
+./vendor/bin/sail down
+# or
+make down
 
-# Setup database
-touch database/database.sqlite
-php artisan migrate --seed
+# Run migrations
+./vendor/bin/sail artisan migrate
+# or
+make migrate
 
-# Install frontend dependencies
-npm install
-npm run build
+# Run tests
+./vendor/bin/sail artisan test
+# or
+make test
 
-# Start development server
-php artisan serve
+# Install dependencies
+./vendor/bin/sail composer install
+./vendor/bin/sail npm install
+# or
+make npm-install
+
+# Code quality
+./vendor/bin/sail pint          # Code formatting
+./vendor/bin/phpstan analyze    # Static analysis
+# or
+make pint
+
+# Frontend development
+./vendor/bin/sail npm run dev   # Development build
+./vendor/bin/sail npm run watch # Watch mode
+./vendor/bin/sail npm run build # Production build
+# or
+make npm-dev
+make npm-watch  
+make npm-build
+
+# Clear caches
+./vendor/bin/sail artisan optimize:clear
+# or
+make cache-clear
 ```
+
+**Available Makefile commands:**
+- `make init` - Complete project setup
+- `make up/down/restart` - Docker services
+- `make migrate/migrate-fresh/seed` - Database operations
+- `make test/pint` - Testing and code quality
+- `make npm-install/npm-dev/npm-build` - Frontend tasks
+- `make cache-clear` - Clear all caches
 
 ## Usage
 
@@ -186,9 +231,9 @@ The system is highly customizable:
 Run the test suite:
 
 ```bash
-composer test
+./vendor/bin/sail artisan test
 # or
-php artisan test
+make test
 ```
 
 ## API Documentation

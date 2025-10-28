@@ -81,6 +81,15 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket withoutTrashed()
  *
+ * @property string|null $position
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Kirschbaum\Commentions\Comment> $comments
+ * @property-read int|null $comments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Kirschbaum\Commentions\Comment> $commentsQuery
+ * @property-read int|null $comments_query_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket wherePosition($value)
+ *
  * @mixin \Eloquent
  */
 class Ticket extends Model implements Commentable, HasMedia

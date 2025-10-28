@@ -28,12 +28,12 @@ class ProjectPanelProvider extends PanelProvider
         return $panel
             ->topNavigation()
             ->default()
-            ->login()
             ->id('project')
             ->path('')
+            ->login()
             ->maxContentWidth(Width::Full)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Stone,
             ])
             ->discoverResources(in: app_path('Filament/Project/Resources'), for: 'App\Filament\Project\Resources')
             ->discoverPages(in: app_path('Filament/Project/Pages'), for: 'App\Filament\Project\Pages')
@@ -55,6 +55,8 @@ class ProjectPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->resourceEditPageRedirect('view')
+            ->resourceCreatePageRedirect('view');
     }
 }

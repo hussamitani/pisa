@@ -18,7 +18,7 @@ class LinkWidget extends Widget
 
     public ?string $buttonText = 'Open';
 
-    public string|Heroicon $buttonIcon = 'heroicon-o-arrow-top-right-on-square';
+    public string|Heroicon $buttonIcon = Heroicon::ArrowTopRightOnSquare;
 
     public bool $newTab = true;
 
@@ -29,7 +29,7 @@ class LinkWidget extends Widget
         string $title,
         string $description,
         string $buttonText,
-        string|Heroicon|null $buttonIcon = null,
+        string|Heroicon $buttonIcon = Heroicon::ArrowTopRightOnSquare,
         ?bool $newTab = false,
     ): WidgetConfiguration {
         return LinkWidget::make([

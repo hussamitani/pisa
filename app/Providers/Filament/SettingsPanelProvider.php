@@ -33,7 +33,7 @@ class SettingsPanelProvider extends PanelProvider
             ->maxContentWidth(Width::Full)
             ->viteTheme('resources/css/filament/settings/theme.css')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Lime,
             ])
             ->discoverResources(in: app_path('Filament/Settings/Resources'), for: 'App\Filament\Settings\Resources')
             ->discoverPages(in: app_path('Filament/Settings/Pages'), for: 'App\Filament\Settings\Pages')
@@ -59,6 +59,8 @@ class SettingsPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->resourceEditPageRedirect('index')
+            ->resourceCreatePageRedirect('index');
     }
 }

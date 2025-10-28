@@ -92,7 +92,11 @@ init:
 	./vendor/bin/sail artisan key:generate
 	@echo "Running additional artisan commands..."
 	./vendor/bin/sail artisan storage:link
-	./vendor/bin/sail artisan migrate:fresh --seed
+	./vendor/bin/sail artisan migrate:fresh
+	./vendor/bin/sail artisan app:setup
+	./vendor/bin/sail artisan shield:super-admin --panel=admin --no-interaction
+	./vendor/bin/sail artisan shield:generate --all --option=permissions --panel=admin
+	./vendor/bin/sail artisan db:seed --class=ProductionSeeder
 	./vendor/bin/sail artisan optimize:clear
 	./vendor/bin/sail artisan config:cache
 	./vendor/bin/sail artisan route:cache
