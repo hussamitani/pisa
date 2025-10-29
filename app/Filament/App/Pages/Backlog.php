@@ -5,37 +5,23 @@ declare(strict_types=1);
 namespace App\Filament\App\Pages;
 
 use App\Filament\App\Resources\Tickets\Pages\CreateTicket;
+use App\Filament\App\Widgets\SprintTable;
 use App\Models\Project;
 use App\Models\Ticket;
-use App\Models\TicketPriority;
-use App\Models\TicketStatus;
-use App\Models\TicketType;
 use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
-use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\SelectColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
-class Backlog extends Page implements HasTable
+class Backlog extends Page
 {
-    use InteractsWithTable;
-
-    protected $listeners = ['sprint-updated' => '$refresh', 'refresh-all-tables' => '$refresh'];
+    protected $listeners = ['sprint-updated' => '$refresh'];
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQueueList;
 
     protected static ?int $navigationSort = 5;
-
-    protected string $view = 'filament.app.pages.backlog';
 
     protected Width|string|null $maxContentWidth = Width::Full;
 
@@ -44,80 +30,29 @@ class Backlog extends Page implements HasTable
         return 'Backlog';
     }
 
-    public function table(Table $table): Table
+    public function getHeaderWidgetsColumns(): int|array
     {
-        return $table
-            ->query($this->getTableQuery())
-            ->columns([
-                TextColumn::make('code')
-                    ->badge()
-                    ->sortable(),
-                TextColumn::make('title')
-                    ->sortable(),
-                TextColumn::make('type')
-                    ->icon(fn (TicketType $state) => $state->getIcon())
-                    ->formatStateUsing(fn (TicketType $state) => $state->getLabel())
-                    ->sortable(),
-                TextColumn::make('status')
-                    ->formatStateUsing(fn (TicketStatus $state) => $state->name)
-                    ->color(fn (TicketStatus $state) => $state->category->getColor())
-                    ->badge()
-                    ->sortable(),
-                TextColumn::make('priority')
-                    ->badge()
-                    ->color(fn (TicketPriority $state) => Color::hex($state->color))
-                    ->formatStateUsing(fn (TicketPriority $state) => $state->name)
-                    ->icon(fn (TicketPriority $state) => $state->icon)
-                    ->sortable(),
-                SelectColumn::make('sprint_id')
-                    ->label('Sprint')
-                    ->options(function () {
-                        /** @var Project $project */
-                        $project = Filament::getTenant();
-
-                        return $project->sprints()
-                            ->pluck('name', 'id')
-                            ->toArray();
-                    })
-                    ->placeholder('Backlog')
-                    ->afterStateUpdated(function (Ticket $record, $state) {
-                        $record->update(['sprint_id' => $state]);
-                        $this->dispatch('refresh-all-tables');
-                    }),
-                TextColumn::make('responsible.name')
-                    ->placeholder('Unassigned')
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->date('d.m.Y')
-                    ->sortable(),
-            ])
-            ->defaultSort('sprint_position')
-            ->reorderable('sprint_position')
-            ->striped()
-            ->paginated(false);
+        return 1;
     }
 
-    public function getTableQuery(): Builder
+    protected function getHeaderWidgets(): array
     {
         /** @var Project $project */
         $project = Filament::getTenant();
 
-        return Ticket::query()
-            ->where('project_id', $project->id)
-            ->whereNull('sprint_id');
-    }
+        $sprints = $project->sprints()->with('tickets')->get();
 
-    public function getSprints(): Collection
-    {
-        /** @var Project $project */
-        $project = Filament::getTenant();
+        $widgets = [];
 
-        return $project->sprints()
-            ->with(['tickets' => function ($query) {
-                $query->orderBy('position');
-            }])
-            ->orderBy('begins_at')
-            ->get();
+        // Add sprint tables
+        foreach ($sprints as $sprint) {
+            $widgets[] = SprintTable::make(['sprintId' => $sprint->id]);
+        }
+
+        // Add backlog table (tickets with null sprint_id)
+        $widgets[] = SprintTable::make(['sprintId' => null]);
+
+        return $widgets;
     }
 
     public function changeTicketSprint(int $ticketId, ?string $sprintId): void
