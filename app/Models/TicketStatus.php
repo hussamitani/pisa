@@ -44,7 +44,7 @@ class TicketStatus extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'color', 'order',
+        'name', 'category',
     ];
 
     protected $casts = [
