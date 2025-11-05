@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 class SprintTable extends TableWidget
 {
     protected static bool $isDiscovered = false;
-    
+
     protected $listeners = ['refresh-all-tables' => '$refresh'];
 
     public ?int $sprintId = 0;
