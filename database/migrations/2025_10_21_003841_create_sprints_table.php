@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('project_id')->constrained();
             $table->dateTime('begins_at');
             $table->dateTime('ends_at');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

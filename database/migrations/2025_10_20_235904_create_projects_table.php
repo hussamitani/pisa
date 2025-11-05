@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('ticket_prefix');
             $table->longText('description')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

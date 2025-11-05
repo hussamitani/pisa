@@ -24,8 +24,8 @@ return new class extends Migration
             $table->foreignId('type_id')->constrained('ticket_types');
             $table->foreignId('status_id')->constrained('ticket_statuses');
             $table->foreignId('priority_id')->constrained('ticket_priorities');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
