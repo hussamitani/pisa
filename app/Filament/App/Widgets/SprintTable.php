@@ -21,13 +21,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SprintTable extends TableWidget
 {
+    protected static bool $isDiscovered = false;
+    
     protected $listeners = ['refresh-all-tables' => '$refresh'];
 
-    public ?int $sprintId = null;
+    public ?int $sprintId = 0;
 
     public ?Sprint $sprint = null;
 
-    public function mount($sprintId): void
+    public function mount(?int $sprintId = 0): void
     {
         $this->sprintId = $sprintId;
         $this->sprint = $sprintId ? Sprint::find($sprintId) : null;
