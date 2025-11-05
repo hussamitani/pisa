@@ -8,6 +8,7 @@ use App\Filament\Project\Resources\Projects\Pages\CreateProject;
 use App\Filament\Project\Resources\Projects\Pages\EditProject;
 use App\Filament\Project\Resources\Projects\Pages\ListProjects;
 use App\Filament\Project\Resources\Projects\Pages\ViewProject;
+use App\Filament\Project\Resources\Projects\RelationManagers\TeamsRelationManager;
 use App\Filament\Project\Resources\Projects\Schemas\ProjectForm;
 use App\Filament\Project\Resources\Projects\Schemas\ProjectInfolist;
 use App\Filament\Project\Resources\Projects\Tables\ProjectsTable;
@@ -44,7 +45,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TeamsRelationManager::class,
         ];
     }
 

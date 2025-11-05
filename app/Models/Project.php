@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,28 +45,29 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read int|null $users_count
  *
  * @method static \Database\Factories\ProjectFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereTicketPrefix($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereTicketPrioritySchemeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereTicketStatusSchemeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereTicketTypeSchemeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project withoutTrashed()
+ * @method static Builder<static>|Project newModelQuery()
+ * @method static Builder<static>|Project newQuery()
+ * @method static Builder<static>|Project onlyTrashed()
+ * @method static Builder<static>|Project query()
+ * @method static Builder<static>|Project whereCreatedAt($value)
+ * @method static Builder<static>|Project whereDeletedAt($value)
+ * @method static Builder<static>|Project whereDescription($value)
+ * @method static Builder<static>|Project whereId($value)
+ * @method static Builder<static>|Project whereName($value)
+ * @method static Builder<static>|Project whereTicketPrefix($value)
+ * @method static Builder<static>|Project whereTicketPrioritySchemeId($value)
+ * @method static Builder<static>|Project whereTicketStatusSchemeId($value)
+ * @method static Builder<static>|Project whereTicketTypeSchemeId($value)
+ * @method static Builder<static>|Project whereUpdatedAt($value)
+ * @method static Builder<static>|Project withTrashed(bool $withTrashed = true)
+ * @method static Builder<static>|Project withoutTrashed()
  *
  * @mixin \Eloquent
  */
 class Project extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, SoftDeletes;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     protected $fillable = [
         'name',
@@ -85,9 +87,22 @@ class Project extends Model implements HasMedia
         return $this->users();
     }
 
-    public function users(): BelongsToMany
+    public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'project_users', 'project_id', 'user_id')->withPivot(['role']);
+        return $this->belongsToMany(
+            Team::class,
+            'team_projects',
+        );
+    }
+
+    public function users(): Builder
+    {
+        return User::query()
+            ->select('users.*')
+            ->distinct()
+            ->join('team_users', 'users.id', '=', 'team_users.user_id')
+            ->join('team_projects', 'team_users.team_id', '=', 'team_projects.team_id')
+            ->where('team_projects.project_id', $this->id);
     }
 
     public function tickets(): HasMany
@@ -100,7 +115,6 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Sprint::class, 'project_id', 'id');
     }
 
-    // Scheme relationships
     public function ticketTypeScheme(): BelongsTo
     {
         return $this->belongsTo(TicketTypeScheme::class, 'ticket_type_scheme_id');

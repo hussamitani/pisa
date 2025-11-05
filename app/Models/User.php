@@ -7,8 +7,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,7 +63,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements Commenter, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable, \Znck\Eloquent\Traits\BelongsToThrough;
 
     /**
      * The attributes that are mass assignable.
@@ -118,11 +120,33 @@ class User extends Authenticatable implements Commenter, HasTenants
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return true;
+        if (! $tenant instanceof Project) {
+            return false;
+        }
+
+        return $tenant->users()->pluck('users.id')->contains($this->id);
     }
 
     public function getTenants(Panel $panel): array|Collection
     {
-        return Project::all();
+        return $this->projects()->get();
+    }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Team::class,
+            'team_users',
+        );
+    }
+
+    public function projects(): Builder
+    {
+        return Project::query()
+            ->select('projects.*')
+            ->distinct()
+            ->join('team_projects', 'projects.id', '=', 'team_projects.project_id')
+            ->join('team_users', 'team_projects.team_id', '=', 'team_users.team_id')
+            ->where('team_users.user_id', $this->id);
     }
 }
