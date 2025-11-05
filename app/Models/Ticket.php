@@ -28,7 +28,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int $type_id
  * @property int $status_id
  * @property int $priority_id
- * @property int $order
+ * @property int $project_position
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -110,9 +110,9 @@ class Ticket extends Model implements Commentable, HasMedia
         static::creating(function (Ticket $item) {
             $project = Project::where('id', $item->project_id)->first();
             $count = Ticket::where('project_id', $project->id)->count();
-            $order = $project->tickets?->last()?->order ?? -1;
+            $project_position = $project->tickets?->last()?->project_position ?? -1;
             $item->code = $project->ticket_prefix.'-'.($count + 1);
-            $item->order = $order + 1;
+            $item->project_position = $project_position + 1;
         });
 
         static::created(function (Ticket $item) {

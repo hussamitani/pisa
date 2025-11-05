@@ -106,3 +106,4 @@ init:
 	./vendor/bin/sail artisan about
 	@echo "Laravel Sail environment initialized successfully."
 	@echo "Visit $$(grep ^APP_URL= .env | cut -d '=' -f2-)"
+	@echo "`npm run dev`"
