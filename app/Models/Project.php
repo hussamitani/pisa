@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Znck\Eloquent\Relations\BelongsToThrough;
 
 /**
  * @property int $id
@@ -82,11 +83,6 @@ class Project extends Model implements HasMedia
         'cover',
     ];
 
-    public function members(): BelongsToMany
-    {
-        return $this->users();
-    }
-
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -95,14 +91,31 @@ class Project extends Model implements HasMedia
         );
     }
 
-    public function users(): Builder
+    public function users(): BelongsToThrough
     {
-        return User::query()
-            ->select('users.*')
-            ->distinct()
-            ->join('team_users', 'users.id', '=', 'team_users.user_id')
-            ->join('team_projects', 'team_users.team_id', '=', 'team_projects.team_id')
-            ->where('team_projects.project_id', $this->id);
+        return $this->belongsToThrough(
+            User::class,
+            [
+                TeamUser::class,
+                Team::class,
+                TeamProject::class,
+                Project::class,
+            ],
+            'id',
+            null,
+            [
+                TeamUser::class => 'id',
+                Team::class => 'team_id',
+                TeamProject::class => 'id',
+                Project::class => 'id',
+            ],
+            [
+                TeamUser::class => 'team_id',
+                Team::class => 'id',
+                TeamProject::class => 'project_id',
+                Project::class => 'id',
+            ]
+        );
     }
 
     public function tickets(): HasMany
